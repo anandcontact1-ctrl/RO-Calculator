@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8fafc" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="RO Calculator" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>RO Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="brand-block">
+          <div class="brand-row">
+            <h1 class="brand" data-i18n="appTitle">RO Calculator</h1>
+          </div>
+          <p id="headerSubtitle" class="subtitle" data-i18n="appSubtitle">Fast • Smart • Elegant</p>
+        </div>
+        <div class="top-actions">
+          <span id="connectionStatus" class="status-pill compact-status"><span class="status-dot"></span><span class="status-text">Online</span></span>
+          <input id="userName" class="name-input" type="text" placeholder="Name" aria-label="Your name" />
+        </div>
+      </header>
+
+      <nav class="tab-nav" aria-label="Calculator tools">
+        <button class="tab-btn active" data-target="calcPane" data-i18n="navCalculator">Calculator</button>
+        <button class="tab-btn" data-target="converterPane" data-i18n="navConverter">Converter</button>
+        <button class="tab-btn" data-target="financePane" data-i18n="navFinance">Finance</button>
+        <button class="tab-btn" data-target="healthPane" data-i18n="navHealth">Health</button>
+        <button class="tab-btn" data-target="graphPane" data-i18n="navGraph">Graph</button>
+        <button class="tab-btn" data-target="photoPane" data-i18n="navPhoto">Photo</button>
+      </nav>
+
+      <main class="content-area">
+        <section id="calcPane" class="pane active">
+          <div class="calculator-card">
+            <div class="screen">
+              <input id="display" type="text" value="0" readonly autocomplete="off" aria-label="Calculator display" />
+              <div id="subDisplay" class="sub-display">0</div>
+            </div>
+
+            <div class="status-row">
+              <span id="connectionStatus" class="status-pill compact-status"><span class="status-dot"></span><span class="status-text">Online</span></span>
+            </div>
+
+            <div class="helper-row">
+              <button id="scientificToggle" class="helper-pill alt" type="button" data-i18n="helperScientific">Scientific</button>
+              <button id="historyToggle" class="helper-pill alt" type="button" data-i18n="historyTitle">History</button>
+            </div>
+
+            <div class="history-panel">
+              <div class="history-card compact-history-card">
+                <div class="history-header">
+                  <span data-i18n="historyTitle">History</span>
+                  <button id="clearHistory" class="history-clear" type="button" data-i18n="historyClear">Clear</button>
+                </div>
+                <ul id="historyList" class="history-list"></ul>
+              </div>
+            </div>
+
+            <div id="scientificPanel" class="scientific-panel">
+              <button class="btn sci-btn" data-action="parenthesis-open" data-display="(">(</button>
+              <button class="btn sci-btn" data-action="parenthesis-close" data-display=")">)</button>
+              <button class="btn sci-btn" data-action="pi" data-display="π">π</button>
+              <button class="btn sci-btn" data-action="euler" data-display="e">e</button>
+              <button class="btn sci-btn" data-action="sin" data-display="sin(">sin</button>
+              <button class="btn sci-btn" data-action="cos" data-display="cos(">cos</button>
+              <button class="btn sci-btn" data-action="tan" data-display="tan(">tan</button>
+              <button class="btn sci-btn" data-action="pow" data-display="^">xʸ</button>
+              <button class="btn sci-btn" data-action="log" data-display="log(">log</button>
+              <button class="btn sci-btn" data-action="ln" data-display="ln(">ln</button>
+              <button class="btn sci-btn" data-action="sqrt" data-display="√">√</button>
+              <button class="btn sci-btn" data-action="percent" data-display="%">%</button>
+              <button class="btn sci-btn" data-action="square" data-display="^2">x²</button>
+              <button class="btn sci-btn" data-action="cube" data-display="^3">x³</button>
+              <button class="btn sci-btn" data-action="reciprocal" data-display="1/">1/x</button>
+              <button class="btn sci-btn" data-action="memory-clear">MC</button>
+              <button class="btn sci-btn" data-action="memory-recall">MR</button>
+              <button class="btn sci-btn" data-action="memory-add">M+</button>
+              <button class="btn sci-btn" data-action="memory-subtract">M-</button>
+            </div>
+
+            <div class="buttons">
+              <button class="btn action" data-action="clear">AC</button>
+              <button class="btn action" data-action="delete">⌫</button>
+              <button class="btn function" data-action="sqrt" data-display="√">√</button>
+              <button class="btn operator" data-value="/" data-display="÷">÷</button>
+
+              <button class="btn number" data-value="7">7</button>
+              <button class="btn number" data-value="8">8</button>
+              <button class="btn number" data-value="9">9</button>
+              <button class="btn operator" data-value="*" data-display="×">×</button>
+
+              <button class="btn number" data-value="4">4</button>
+              <button class="btn number" data-value="5">5</button>
+              <button class="btn number" data-value="6">6</button>
+              <button class="btn operator" data-value="-" data-display="−">−</button>
+
+              <button class="btn number" data-value="1">1</button>
+              <button class="btn number" data-value="2">2</button>
+              <button class="btn number" data-value="3">3</button>
+              <button class="btn operator" data-value="+" data-display="+">+</button>
+
+              <button class="btn number zero" data-value="0">0</button>
+              <button class="btn number" data-value=".">.</button>
+              <button class="btn function" data-action="percent" data-display="%">%</button>
+              <button class="btn equal" data-action="equals">=</button>
+            </div>
+          </div>
+
+        </section>
+
+        <section id="converterPane" class="pane">
+          <div class="panel-card">
+            <h2 data-i18n="converterTitle">Unit Converter</h2>
+            <div class="form-grid">
+              <label>
+                <span data-i18n="converterCategory">Category</span>
+                <select id="unitCategory">
+                  <option value="length" data-i18n-option="length">Length</option>
+                  <option value="weight" data-i18n-option="weight">Weight</option>
+                  <option value="temperature" data-i18n-option="temperature">Temperature</option>
+                  <option value="speed" data-i18n-option="speed">Speed</option>
+                  <option value="area" data-i18n-option="area">Area</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="converterValue">Value</span>
+                <input id="unitValue" type="number" value="1" step="any" />
+              </label>
+              <label>
+                <span data-i18n="converterFrom">From</span>
+                <select id="fromUnit"></select>
+              </label>
+              <label>
+                <span data-i18n="converterTo">To</span>
+                <select id="toUnit"></select>
+              </label>
+            </div>
+            <button id="convertButton" class="primary-btn" type="button" data-i18n="convertButton">Convert</button>
+            <div id="unitResult" class="result-box">Result will appear here.</div>
+          </div>
+        </section>
+
+        <section id="financePane" class="pane">
+          <div class="panel-grid">
+            <div class="panel-card">
+              <h2 data-i18n="currencyTitle">Currency Converter</h2>
+              <div class="form-grid small-grid">
+                <label>
+                  <span data-i18n="currencyAmount">Amount</span>
+                  <input id="currencyAmount" type="number" value="100" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+                <label>
+                  <span data-i18n="currencyFrom">From</span>
+                  <select id="currencyFrom">
+                    <option value="INR">INR</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="JPY">JPY</option>
+                    <option value="AED">AED</option>
+                  </select>
+                </label>
+                <label>
+                  <span data-i18n="currencyTo">To</span>
+                  <select id="currencyTo">
+                    <option value="USD">USD</option>
+                    <option value="INR" selected>INR</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="JPY">JPY</option>
+                    <option value="AED">AED</option>
+                  </select>
+                </label>
+              </div>
+              <button id="currencyButton" class="primary-btn" type="button" data-i18n="convertButton">Convert</button>
+              <div id="currencyResult" class="result-box">Result will appear here.</div>
+              <div id="currencyStatus" class="result-box">Live rates will appear here.</div>
+            </div>
+
+            <div class="panel-card">
+              <h2 data-i18n="percentageTitle">Percentage Calculator</h2>
+              <div class="form-grid small-grid">
+                <label>
+                  <span data-i18n="percentMode">Mode</span>
+                  <select id="percentMode">
+                    <option value="discount" data-i18n-option="discount">Discount</option>
+                    <option value="gst" data-i18n-option="gst">GST</option>
+                    <option value="profit" data-i18n-option="profitLoss">Profit / Loss</option>
+                  </select>
+                </label>
+                <label>
+                  <span data-i18n="percentAmount">Amount</span>
+                  <input id="percentAmount" type="number" value="1000" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+                <label>
+                  <span data-i18n="percentRate">Rate</span>
+                  <input id="percentRate" type="number" value="18" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+              </div>
+              <button id="percentButton" class="primary-btn" type="button" data-i18n="calculateButton">Calculate</button>
+              <div id="percentResult" class="result-box">Result will appear here.</div>
+            </div>
+
+            <div class="panel-card">
+              <h2 data-i18n="emiTitle">EMI Calculator</h2>
+              <div class="form-grid small-grid">
+                <label>
+                  <span data-i18n="emiPrincipal">Loan Amount</span>
+                  <input id="emiPrincipal" type="number" value="100000" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+                <label>
+                  <span data-i18n="emiRate">Interest Rate (%)</span>
+                  <input id="emiRate" type="number" value="10" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+                <label>
+                  <span data-i18n="emiYears">Years</span>
+                  <input id="emiYears" type="number" value="5" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+              </div>
+              <button id="emiButton" class="primary-btn" type="button" data-i18n="calculateButton">Calculate</button>
+              <div id="emiResult" class="result-box">Result will appear here.</div>
+            </div>
+
+            <div class="panel-card">
+              <h2 data-i18n="gstTitle">GST Calculator</h2>
+              <div class="form-grid small-grid">
+                <label>
+                  <span data-i18n="gstAmount">Amount</span>
+                  <input id="gstAmount" type="number" value="5000" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+                <label>
+                  <span data-i18n="gstRate">GST Rate (%)</span>
+                  <input id="gstRate" type="number" value="18" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+                <label>
+                  <span data-i18n="gstType">Type</span>
+                  <select id="gstType">
+                    <option value="inclusive" data-i18n-option="inclusive">Inclusive</option>
+                    <option value="exclusive" data-i18n-option="exclusive">Exclusive</option>
+                  </select>
+                </label>
+              </div>
+              <button id="gstButton" class="primary-btn" type="button" data-i18n="calculateButton">Calculate</button>
+              <div id="gstResult" class="result-box">Result will appear here.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="healthPane" class="pane">
+          <div class="panel-grid">
+            <div class="panel-card">
+              <h2 data-i18n="ageTitle">Age Calculator</h2>
+              <label>
+                <span data-i18n="dobLabel">Date of Birth</span>
+                <input id="dobInput" type="date" />
+              </label>
+              <button id="ageButton" class="primary-btn" type="button" data-i18n="calculateButton">Calculate</button>
+              <div id="ageResult" class="result-box">Result will appear here.</div>
+            </div>
+
+            <div class="panel-card">
+              <h2 data-i18n="bmiTitle">BMI Calculator</h2>
+              <div class="form-grid small-grid">
+                <label>
+                  <span data-i18n="bmiWeight">Weight (kg)</span>
+                  <input id="bmiWeight" type="number" value="70" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+                <label>
+                  <span data-i18n="bmiHeight">Height (cm)</span>
+                  <input id="bmiHeight" type="number" value="170" step="any" inputmode="decimal" autocomplete="off" />
+                </label>
+              </div>
+              <button id="bmiButton" class="primary-btn" type="button" data-i18n="calculateButton">Calculate</button>
+              <div id="bmiResult" class="result-box">Result will appear here.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="graphPane" class="pane">
+          <div class="panel-card">
+            <h2 data-i18n="graphTitle">Graph Calculator</h2>
+            <label>
+              <span data-i18n="graphExpression">Function</span>
+              <input id="graphExpression" type="text" value="x*x" placeholder="x*x or sin(x)" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            </label>
+            <div id="graphQuickPickers" class="graph-quick-pickers">
+              <button class="graph-chip" type="button" data-expression="x*x">x²</button>
+              <button class="graph-chip" type="button" data-expression="sin(x)">sin(x)</button>
+              <button class="graph-chip" type="button" data-expression="cos(x)">cos(x)</button>
+              <button class="graph-chip" type="button" data-expression="tan(x)">tan(x)</button>
+              <button class="graph-chip" type="button" data-expression="x/2">x/2</button>
+              <button class="graph-chip" type="button" data-expression="abs(x)">abs(x)</button>
+            </div>
+            <div class="graph-controls">
+              <button id="graphButton" class="primary-btn" type="button" data-i18n="plotButton">Plot Graph</button>
+              <button id="graphZoomIn" class="graph-control-btn" type="button">＋</button>
+              <button id="graphZoomOut" class="graph-control-btn" type="button">−</button>
+              <button id="graphReset" class="graph-control-btn" type="button">↺</button>
+            </div>
+            <label>
+              <span>Curves</span>
+              <input id="graphExpressions" type="text" value="x*x;sin(x)" placeholder="x*x;sin(x);cos(x)" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            </label>
+            <div class="graph-keypad" aria-label="Graph keypad">
+              <button class="graph-key" type="button" data-value="x">x</button>
+              <button class="graph-key" type="button" data-value="π">π</button>
+              <button class="graph-key" type="button" data-value="e">e</button>
+              <button class="graph-key" type="button" data-value="^">^</button>
+              <button class="graph-key" type="button" data-value="(">(</button>
+              <button class="graph-key" type="button" data-value=")">)</button>
+              <button class="graph-key" type="button" data-value="+">+</button>
+              <button class="graph-key" type="button" data-value="-">−</button>
+              <button class="graph-key" type="button" data-value="*">×</button>
+              <button class="graph-key" type="button" data-value="/">÷</button>
+              <button class="graph-key" type="button" data-value="sin(x)">sin</button>
+              <button class="graph-key" type="button" data-value="cos(x)">cos</button>
+              <button class="graph-key" type="button" data-value="tan(x)">tan</button>
+              <button class="graph-key" type="button" data-value="abs(x)">abs</button>
+              <button class="graph-key" type="button" data-action="backspace">⌫</button>
+              <button class="graph-key" type="button" data-action="clear">C</button>
+              <button class="graph-key graph-key-wide" type="button" data-action="plot">Plot</button>
+            </div>
+            <p class="graph-hint">Try: x*x, sin(x), cos(x), x/2, abs(x). Separate curves with semicolons.</p>
+            <svg id="graphCanvas" viewBox="0 0 320 240" class="graph-canvas" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+        </section>
+
+        <section id="photoPane" class="pane">
+          <div class="panel-card">
+            <h2 data-i18n="photoTitle">Photo Calculator</h2>
+            <p class="helper-text" data-i18n="photoText">Upload photos of any issues only in online mode.</p>
+            <div class="photo-actions">
+              <label for="photoInput" class="photo-action-btn">📷 Choose Photo</label>
+              <button id="cameraButton" class="photo-action-btn" type="button">📱 Open Camera</button>
+              <button id="capturePhotoButton" class="photo-action-btn" type="button" style="display:none;">📸 Take Photo</button>
+              <button id="closeCameraButton" class="photo-action-btn" type="button" style="display:none;">✖ Close Camera</button>
+              <input id="photoInput" type="file" accept="image/*" capture="environment" />
+            </div>
+            <div class="photo-preview">
+              <video id="photoVideo" playsinline autoplay muted style="display:none;"></video>
+              <img id="photoPreview" alt="Preview" />
+              <div id="photoResult" class="result-box">No image selected yet.</div>
+            </div>
+            <button id="googleSearchButton" class="photo-action-btn photo-search-btn" type="button">🔍 Search on Google</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
